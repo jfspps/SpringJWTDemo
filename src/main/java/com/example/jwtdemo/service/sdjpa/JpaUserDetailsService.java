@@ -48,7 +48,6 @@ public class JpaUserDetailsService implements UserDetailsService {
     }
 
     // returns a Spring security authorities Set from the custom User's authorities set
-    // (see return value of loadUserByUsername())
     private Collection<? extends GrantedAuthority> convertToSpringAuthorities(Set<Authority> authorities) {
         if (authorities != null && authorities.size() > 0){
             return authorities.stream()

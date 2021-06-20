@@ -4,7 +4,7 @@ import com.example.jwtdemo.domain.model.Reagent;
 import com.example.jwtdemo.domain.security.Authority;
 import com.example.jwtdemo.domain.security.User;
 import com.example.jwtdemo.repositories.sdjpa.ReagentJPARepo;
-import com.example.jwtdemo.repositories.sdjpa.AuthorityRepo;
+import com.example.jwtdemo.repositories.sdjpa.AuthorityJPARepo;
 import com.example.jwtdemo.repositories.sdjpa.UserJPARepo;
 import com.example.jwtdemo.service.ReagentService;
 import com.example.jwtdemo.service.AuthorityService;
@@ -27,11 +27,11 @@ public class DataLoader implements CommandLineRunner {
     private final UserJPARepo userJPARepo;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    private final AuthorityRepo authorityRepo;
+    private final AuthorityJPARepo authorityJPARepo;
     private final AuthorityService authorityService;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         if (reagentService.findAll() == null || reagentService.findAll().isEmpty()){
             log.info("=========== Reagent database empty =====================");
 
@@ -41,14 +41,14 @@ public class DataLoader implements CommandLineRunner {
             reagentJPARepo.save(water);
             reagentJPARepo.save(ammonia);
 
-            log.info("Saved " + reagentService.findAll().size() + " reagents");
+            log.info("=========== Saved " + reagentService.findAll().size() + " reagents ==============");
         }
 
-        if (userService.findAll() == null || userService.findAll().isEmpty()){
+        if (authorityService.findAll() == null || authorityService.findAll().isEmpty()){
             log.info("=========== User database empty =====================");
 
-            Authority adminAuthority = authorityRepo.save(Authority.builder().authority(Authority.ADMIN).build());
-            Authority userAuthority = authorityRepo.save(Authority.builder().authority(Authority.USER).build());
+            Authority adminAuthority = authorityJPARepo.save(Authority.builder().authority(Authority.ADMIN).build());
+            Authority userAuthority = authorityJPARepo.save(Authority.builder().authority(Authority.USER).build());
 
             User admin = User.builder()
                     .username("admin")
@@ -64,7 +64,7 @@ public class DataLoader implements CommandLineRunner {
             userJPARepo.save(admin);
             userJPARepo.save(user);
 
-            log.info("Saved " + userService.findAll().size() + " users");
+            log.info("========== Saved " + userService.findAll().size() + " users ==============");
         }
     }
 }

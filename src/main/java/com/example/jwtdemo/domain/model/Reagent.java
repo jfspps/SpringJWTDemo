@@ -1,7 +1,6 @@
 package com.example.jwtdemo.domain.model;
 
 import lombok.*;
-import org.springframework.data.annotation.Version;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -9,8 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

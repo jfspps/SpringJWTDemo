@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
@@ -21,6 +22,25 @@ public class User implements Serializable, Comparable<User>{
 
     private boolean isNew() {
         return this.id == null;
+    }
+
+    @Version
+    private Long version;
+
+    private String serialNumber;
+
+    private LocalDateTime createdOn;
+
+    private LocalDateTime updatedOn;
+
+    @PrePersist
+    public void setCreate_Date(){
+        this.setCreatedOn(LocalDateTime.now());
+    }
+
+    @PreUpdate
+    public void doSomethingBeforeUpdating(){
+        this.setUpdatedOn(LocalDateTime.now());
     }
 
     @NotNull
