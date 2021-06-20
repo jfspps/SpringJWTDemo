@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Version;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -14,7 +15,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Reagent {
+public class Reagent implements Serializable, Comparable<Reagent> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,12 +31,12 @@ public class Reagent {
     private LocalDateTime updatedOn;
 
     @PrePersist
-    public void setCreate_Date(){
+    public void setCreate_Date() {
         this.setCreatedOn(LocalDateTime.now());
     }
 
     @PreUpdate
-    public void doSomethingBeforeUpdating(){
+    public void doSomethingBeforeUpdating() {
         this.setUpdatedOn(LocalDateTime.now());
     }
 
@@ -56,5 +57,10 @@ public class Reagent {
     @Override
     public int hashCode() {
         return Objects.hash(CAS_id);
+    }
+
+    @Override
+    public int compareTo(Reagent that) {
+        return this.chemicalName.compareToIgnoreCase(that.chemicalName);
     }
 }

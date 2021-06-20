@@ -1,11 +1,19 @@
 package com.example.jwtdemo.bootstrap;
 
 import com.example.jwtdemo.domain.model.Reagent;
+import com.example.jwtdemo.domain.security.Authority;
+import com.example.jwtdemo.domain.security.User;
 import com.example.jwtdemo.repositories.sdjpa.ReagentJPARepo;
+import com.example.jwtdemo.repositories.sdjpa.AuthorityRepo;
+import com.example.jwtdemo.repositories.sdjpa.UserJPARepo;
 import com.example.jwtdemo.service.ReagentService;
+import com.example.jwtdemo.service.AuthorityService;
+import com.example.jwtdemo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,8 +22,13 @@ import org.springframework.stereotype.Component;
 public class DataLoader implements CommandLineRunner {
 
     private final ReagentService reagentService;
-
     private final ReagentJPARepo reagentJPARepo;
+
+    private final UserJPARepo userJPARepo;
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final AuthorityRepo authorityRepo;
+    private final AuthorityService authorityService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -29,6 +42,29 @@ public class DataLoader implements CommandLineRunner {
             reagentJPARepo.save(ammonia);
 
             log.info("Saved " + reagentService.findAll().size() + " reagents");
+        }
+
+        if (userService.findAll() == null || userService.findAll().isEmpty()){
+            log.info("=========== User database empty =====================");
+
+            Authority adminAuthority = authorityRepo.save(Authority.builder().authority(Authority.ADMIN).build());
+            Authority userAuthority = authorityRepo.save(Authority.builder().authority(Authority.USER).build());
+
+            User admin = User.builder()
+                    .username("admin")
+                    .password(passwordEncoder.encode("admin123"))
+                    .authority(adminAuthority)
+                    .build();
+            User user = User.builder()
+                    .username("user")
+                    .password(passwordEncoder.encode("user123"))
+                    .authority(userAuthority)
+                    .build();
+
+            userJPARepo.save(admin);
+            userJPARepo.save(user);
+
+            log.info("Saved " + userService.findAll().size() + " users");
         }
     }
 }
