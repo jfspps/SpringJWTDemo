@@ -37,6 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/welcome", "/login").permitAll()
                 //set pages which require authentication (no ROLE_ prefix)
                 .antMatchers("/authenticated/**").hasAnyRole(Authority.USER, Authority.ADMIN)
+                .antMatchers("/api/**").hasAnyRole(Authority.USER, Authority.ADMIN)
                 // handle login and logout
                 .and().httpBasic()
                 .and().formLogin().loginPage("/login").permitAll().failureUrl("/login-error")

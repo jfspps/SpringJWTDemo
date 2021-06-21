@@ -178,6 +178,13 @@
                             <version>${org.mapstruct.version}</version>
                         </path>
                     </annotationProcessorPaths>
+                    <compilerArgs>
+                        <compilerArg>
+                            <!-- Accounts for missing MapStruct bean in ServiceImpl  -->
+                            <!-- Substitute for @Mapper(componentModel = "spring")   -->
+                            -Amapstruct.defaultComponentModel=spring
+                        </compilerArg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>
