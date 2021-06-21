@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/header :: baseHead(~{::title})">
+  <title>Administration page</title>
+</head>
+<body>
+
+<div class="container">
+  <div class="row justify-content-start">
+    <div class="col">
+      <h1>Welcome to JWT Demo</h1>
+    </div>
+  </div>
+  <div class="row justify-content-start">
+    <div class="col">
+      <p>
+        You are logged in with username: <b><span sec:authentication="name"></span></b>
+      </p>
+    </div>
+  </div>
+
+  <div class="row justify-content-start">
+    <div class="col">
+      <div class="btn-group">
+        <a href="/logout" class="btn btn-outline-danger">Sign out</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+
+</body>
+</html>

@@ -51,7 +51,7 @@ public class JpaUserDetailsService implements UserDetailsService {
     private Collection<? extends GrantedAuthority> convertToSpringAuthorities(Set<Authority> authorities) {
         if (authorities != null && authorities.size() > 0){
             return authorities.stream()
-                    .map(Authority::getAuthority)
+                    .map(Authority::getRole)
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toSet());
         } else {

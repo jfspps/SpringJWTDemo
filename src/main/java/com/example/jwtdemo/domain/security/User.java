@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -57,7 +58,7 @@ public class User implements Serializable, Comparable<User>{
     @JoinTable(name = "user_authority",
             joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
-    private Set<Authority> authorities;
+    private Set<Authority> authorities = new HashSet<>();
 
     //adding other Spring's UserDetails interface properties
     @Builder.Default

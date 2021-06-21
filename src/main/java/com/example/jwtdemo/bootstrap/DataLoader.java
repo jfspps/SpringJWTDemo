@@ -41,14 +41,16 @@ public class DataLoader implements CommandLineRunner {
             reagentJPARepo.save(water);
             reagentJPARepo.save(ammonia);
 
-            log.info("=========== Saved " + reagentService.findAll().size() + " reagents ==============");
+            log.info("Saved " + reagentService.findAll().size() + " reagents");
         }
 
         if (authorityService.findAll() == null || authorityService.findAll().isEmpty()){
             log.info("=========== User database empty =====================");
 
-            Authority adminAuthority = authorityJPARepo.save(Authority.builder().authority(Authority.ADMIN).build());
-            Authority userAuthority = authorityJPARepo.save(Authority.builder().authority(Authority.USER).build());
+            // have to use ROLE_ADMIN and ROLE_USER
+            Authority adminAuthority = authorityJPARepo.save(Authority.builder().role(Authority.ROLE_ADMIN).build());
+            Authority userAuthority = authorityJPARepo.save(Authority.builder().role(Authority.ROLE_USER).build());
+            log.info("Authorities added: " + authorityJPARepo.findAll().size());
 
             User admin = User.builder()
                     .username("admin")
@@ -64,7 +66,7 @@ public class DataLoader implements CommandLineRunner {
             userJPARepo.save(admin);
             userJPARepo.save(user);
 
-            log.info("========== Saved " + userService.findAll().size() + " users ==============");
+            log.info("Saved " + userService.findAll().size() + " users");
         }
     }
 }
