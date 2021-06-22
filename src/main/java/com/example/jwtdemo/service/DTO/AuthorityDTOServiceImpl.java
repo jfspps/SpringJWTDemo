@@ -5,18 +5,17 @@ import com.example.jwtdemo.domain.DTO.AuthorityDTOList;
 import com.example.jwtdemo.domain.mapper.AuthorityMapper;
 import com.example.jwtdemo.domain.security.Authority;
 import com.example.jwtdemo.domain.security.User;
-import com.example.jwtdemo.exception.NotFoundException;
 import com.example.jwtdemo.repositories.sdjpa.AuthorityJPARepo;
 import com.example.jwtdemo.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class AuthorityDTOServiceImpl implements AuthorityDTOService{
 
     private final AuthorityJPARepo authorityJPARepo;
@@ -49,7 +48,8 @@ public class AuthorityDTOServiceImpl implements AuthorityDTOService{
         User user = userService.findById(userID);
 
         if (user == null){
-            throw new NotFoundException("User not found; cannot build authority list");
+            log.info("User not found; cannot build authority list");
+            return null;
         }
 
         Set<Authority> authorityList = user.getAuthorities();
@@ -69,7 +69,8 @@ public class AuthorityDTOServiceImpl implements AuthorityDTOService{
         User user = userService.findById(userID);
 
         if (user == null){
-            throw new NotFoundException("User not found; cannot build authority list");
+            log.info("User not found; cannot build authority list");
+            return null;
         }
 
         Set<Authority> authorityList = user.getAuthorities();

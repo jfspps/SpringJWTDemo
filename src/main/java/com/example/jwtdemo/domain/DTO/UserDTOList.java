@@ -1,5 +1,6 @@
 package com.example.jwtdemo.domain.DTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,5 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 public class UserDTOList {
     // initialise with new ArrayList otherwise getReagentDTOList returns NPE
+    @JsonProperty("users")
     private List<UserDTO> userDTOList = new ArrayList<>();
 }

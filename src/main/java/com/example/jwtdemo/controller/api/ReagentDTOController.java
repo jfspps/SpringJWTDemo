@@ -23,7 +23,7 @@ public class ReagentDTOController {
     }
 
     /**
-     * Retrieves a list of all ReagentDTOs on file; throws NotFoundException if nothing found
+     * Retrieves a list of all Reagent DTOs on file; throws NotFoundException if nothing found
      * @return DTO list of Reagents
      */
     @GetMapping("/")
@@ -41,9 +41,9 @@ public class ReagentDTOController {
     }
 
     /**
-     * Retrieves a ReagentDTO with the given ID; throws NotFoundException if nothing found
+     * Retrieves a Reagent DTO with the given ID; throws NotFoundException if nothing found
      * @param ID Reagent (persistence) ID
-     * @return ReagentDTO
+     * @return Reagent DTO
      */
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)

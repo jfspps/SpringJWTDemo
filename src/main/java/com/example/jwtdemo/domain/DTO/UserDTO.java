@@ -1,6 +1,6 @@
 package com.example.jwtdemo.domain.DTO;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -26,5 +26,6 @@ public class UserDTO {
 
     private Boolean credentialsNonExpired;
 
+    @JsonProperty("authorities")
     private AuthorityDTOList authorityDTOList;
 }

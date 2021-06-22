@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Slf4j
 @Transactional
 @SpringBootTest
-class ReagentDTOControllerTest {
+class UserDTOControllerTest {
 
     @Autowired
     WebApplicationContext context;
@@ -53,26 +53,26 @@ class ReagentDTOControllerTest {
 
     @ParameterizedTest
     @MethodSource("streamAllUsers")
-    void getAllReagents(String username, String password) throws Exception {
-        mockMvc.perform(get("/api/reagent/").with(httpBasic(username, password))
+    void getAllUsers_WithAuth(String username, String password) throws Exception {
+        mockMvc.perform(get("/api/user/").with(httpBasic(username, password))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(jsonPath("$.reagents", hasSize(2))); // $ is root, followed by DTO properties;
+                .andExpect(jsonPath("$.users", hasSize(2))); // $ is root, followed by DTO properties;
     }
 
     @ParameterizedTest
     @MethodSource("streamDeniedUsers")
-    void getAllReagents_Denied(String username, String password) throws Exception {
-        mockMvc.perform(get("/api/reagent/").with(httpBasic(username, password))
+    void getAllUsers_WithoutAuth(String username, String password) throws Exception {
+        mockMvc.perform(get("/api/user/").with(httpBasic(username, password))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized());
     }
 
     @ParameterizedTest
     @MethodSource("streamAllUsers")
-    void findReagentById(String username, String password) throws Exception {
-        mockMvc.perform(get("/api/reagent/2").with(httpBasic(username, password))
+    void findUserById_WithAuth(String username, String password) throws Exception {
+        mockMvc.perform(get("/api/user/2").with(httpBasic(username, password))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -81,16 +81,16 @@ class ReagentDTOControllerTest {
 
     @ParameterizedTest
     @MethodSource("streamAllUsers")
-    void findReagentById_NotFound(String username, String password) throws Exception {
-        mockMvc.perform(get("/api/reagent/4").with(httpBasic(username, password))
+    void findUserById_WithAuthNotFound(String username, String password) throws Exception {
+        mockMvc.perform(get("/api/user/3").with(httpBasic(username, password))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
     @ParameterizedTest
     @MethodSource("streamDeniedUsers")
-    void findReagentById_Denied(String username, String password) throws Exception {
-        mockMvc.perform(get("/api/reagent/2").with(httpBasic(username, password))
+    void findUserById_WithoutAuth(String username, String password) throws Exception {
+        mockMvc.perform(get("/api/user/1").with(httpBasic(username, password))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized());
     }

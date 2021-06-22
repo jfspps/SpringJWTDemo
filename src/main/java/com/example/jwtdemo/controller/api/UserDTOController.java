@@ -26,7 +26,7 @@ public class UserDTOController {
     }
 
     /**
-     * Retrieves a list of all UserDTOs on file; throws NotFoundException if nothing found
+     * Retrieves a list of all User DTOs on file; throws NotFoundException if nothing found
      * @return DTO list of Users
      */
     @GetMapping("/")
@@ -49,9 +49,9 @@ public class UserDTOController {
     }
 
     /**
-     * Retrieves a UserDTO with the given ID; throws NotFoundException if nothing found
+     * Retrieves a User DTO with the given ID; throws NotFoundException if nothing found
      * @param ID User (persistence) ID
-     * @return UserDTO
+     * @return User DTO
      */
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
