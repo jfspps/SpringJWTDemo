@@ -23,7 +23,7 @@ public class ReagentDTOController {
     }
 
     /**
-     * Retrieves a list of all ReagentDTOs on file
+     * Retrieves a list of all ReagentDTOs on file; throws NotFoundException if nothing found
      * @return DTO list of Reagents
      */
     @GetMapping("/")
@@ -32,13 +32,16 @@ public class ReagentDTOController {
         ReagentDTOList list = new ReagentDTOList();
         List<ReagentDTO> reagentDTOList = reagentDTOService.findAll().getReagentDTOList();
 
-        list.getReagentDTOList().addAll(reagentDTOList);
+        if (reagentDTOList.isEmpty()){
+            throw new NotFoundException("No reagents on file");
+        }
 
+        list.getReagentDTOList().addAll(reagentDTOList);
         return list;
     }
 
     /**
-     * Retrieves a ReagentDTO with the given ID; null if nothing found
+     * Retrieves a ReagentDTO with the given ID; throws NotFoundException if nothing found
      * @param ID Reagent (persistence) ID
      * @return ReagentDTO
      */
